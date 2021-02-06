@@ -1,0 +1,75 @@
+<!-- basic project setup: project name, relative directory, and default ant target -->
+<project name="JavaCucmberHelloWord" basedir="." default="all">
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Edit here: the location of feature file -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <property name="test.case.file" value="." />
+
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- PLEASE DO NOT EDIT FROM HERE TO END OF FILE -->
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- the location of all the jar files we downloaded -->
+    <property name="jars" value="resources/libs"/>
+
+    <!-- the ant job for cleaning up our environment -->
+    <target name="clean">
+        <delete dir="target"/>
+    </target>
+
+    <target name="classpath">
+        <path id="classpath">
+            <fileset dir="${jars}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement location="target/classes"/>
+            <pathelement location="target/test-classes"/>
+            <pathelement location="src/test/resources"/>
+        </path>
+    </target>
+
+    <!-- the ant job for compiling our code -->
+    <target name="compile" depends="classpath,clean">
+        <mkdir dir="target"/>
+        <mkdir dir="target/classes"/>
+        <javac srcdir="src/main/java" destdir="target/classes" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <!-- the ant job for compiling our test code -->
+    <target name="compile-test" depends="compile">
+        <mkdir dir="target/test-classes"/>
+        <javac srcdir="src/test/java" destdir="target/test-classes" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <target name="all-junit" depends="compile,compile-test">
+        <junit failureproperty="junit.failure" fork="false" forkmode="once">
+            <classpath refid="classpath"/>
+            <test name="com.glue.RunTest" haltonfailure="no">
+                <formatter type="plain" usefile="false"/>
+            </test>
+        </junit>
+    </target>
+
+    <target name="all" depends="compile,compile-test">
+        <mkdir dir="target/cucumber-junit-report"/>
+        <java classname="cucumber.api.cli.Main" fork="false" failonerror="false">
+            <classpath refid="classpath"/>
+            <arg value="--plugin"/>
+            <arg value="junit:target/cucumber-junit-report.xml"/>
+            <arg value="--plugin"/>
+            <arg value="pretty"/>
+            <!--<arg value="++plugin"/>-->
+            <!--<arg value="html:target/cucumber-html-report"/>-->
+            <arg value="--glue"/>
+            <arg value="com/glue"/>
+            <arg value="${test.case.file}"/>
+        </java>
+
+        <junitreport todir="target/cucumber-junit-report">
+            <fileset dir="target">
+                <include name="cucumber-junit-report.xml"/>
+            </fileset>
+            <report format="frames" todir="target/cucumber-junit-report"/>
+        </junitreport>
+    </target>
+</project>

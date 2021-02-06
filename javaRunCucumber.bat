@@ -1,0 +1,1 @@
+java -Dfile.encoding=utf-8 -cp D:/Demo/cucumber-sample/resources/libs/*;D:/Demo/cucumber-sample/target/*; cucumber.api.cli.Main -g "com/glue" -p "pretty" "D:/Demo/cucumber-sample/resources/feature"
