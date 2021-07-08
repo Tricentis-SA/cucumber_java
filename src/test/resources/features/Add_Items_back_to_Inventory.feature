@@ -4,13 +4,13 @@ Feature:Add Items back to Inventory
   so that I can track inventory.
 
 
-Scenario: Items returned for refund should be added to inventory.
+Scenario: Items returned for refund should be added to inventory
     Given that a customer previously bought a black sweater from me
     And I have three black sweaters in inventory
     When they return the black sweater for a refund
     Then I should have four black sweaters in inventory
 
-Scenario: Exchanged items should be returned to inventory.
+Scenario: Exchanged items should be returned to inventory
     Given that a customer previously bought a blue garment from me
     And I have two blue garments in inventory
     And three black garments in inventory
@@ -18,16 +18,12 @@ Scenario: Exchanged items should be returned to inventory.
     Then I should have three blue garments in inventory
     And two black garments in inventory
     
-Scenario Outline: Blenders
-    Given I put <thing> in a blender,
-    When I switch the blender on
-    Then it should transform into <other thing>
+Scenario Outline: Eating Cucumbers
+    Given there are <start> cucumbers
+    When I eat <eat> cucumbers
+    Then I should have <left> cucumbers
 
-Examples: Amphibians
-   | thing         | other thing |
-   | Red Tree Frog | mush        |
-
-Examples: Consumer Electronics
-   | thing         | other thing |
-   | iPhone        | toxic waste |
-   | Galaxy Nexus  | toxic waste |
+Examples:
+   | start | eat | left |
+   | 12    | 5   | 7    |
+   | 20    | 5   | 15   |
