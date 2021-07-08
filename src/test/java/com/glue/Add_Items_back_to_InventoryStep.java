@@ -27,17 +27,17 @@ public class Add_Items_back_to_InventoryStep {
         Assert.assertEquals(true, true);
     }
     
-    @Given("^that a customer previously bought a black garment from me$")
+    @Given("^that a customer previously bought a blue garment from me$")
     public void that_a_customer_previously_bought_a_black_garment_from_me() throws Throwable {
         Assert.assertEquals(true, true);
     }
 
-    @When("^I have two blue garments in inventory$")
+    @And("^I have two blue garments in inventory$")
     public void I_have_two_blue_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
 
-    @When("^three black garments in inventory$")
+    @And("^three black garments in inventory$")
     public void three_black_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
@@ -52,7 +52,7 @@ public class Add_Items_back_to_InventoryStep {
         Assert.assertEquals(true, true);
     }
     
-    @When("^two black garments in inventory$")
+    @And("^two black garments in inventory$")
     public void two_black_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
