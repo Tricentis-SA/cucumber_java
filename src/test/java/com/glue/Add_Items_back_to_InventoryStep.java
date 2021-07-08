@@ -32,12 +32,12 @@ public class Add_Items_back_to_InventoryStep {
         Assert.assertEquals(true, true);
     }
 
-    @And("^I have two blue garments in inventory$")
+    @When("^I have two blue garments in inventory$")
     public void I_have_two_blue_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
 
-    @And("^three black garments in inventory$")
+    @When("^three black garments in inventory$")
     public void three_black_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
@@ -52,7 +52,7 @@ public class Add_Items_back_to_InventoryStep {
         Assert.assertEquals(true, true);
     }
     
-    @And("^two black garments in inventory$")
+    @When("^two black garments in inventory$")
     public void two_black_garments_in_inventory() throws Throwable {
         Assert.assertEquals(true, true);
     }
