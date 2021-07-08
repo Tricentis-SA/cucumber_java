@@ -7,6 +7,6 @@ import cucumber.api.CucumberOptions;
 @CucumberOptions(format={"pretty",
         "html:build/test-results/test-report"},
         features={"src/test/resources/features"})
-@CucumberOptions(plugin = {"pretty", "json:target/cucumber-json-report2.json"})
+@CucumberOptions(plugin = {"pretty", "json:target/cucumber-json-report.json"})
 
 public class TestRunner { }
