@@ -8,8 +8,10 @@ trigger:
 
 pool:
   name: Default
+stages:
+- stage: build
 
--Steps:
+steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
