@@ -7,7 +7,11 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: Default
+
+stages:
+- stage: build
+displayName: 'Build'
 
 steps:
 - task: Maven@3
@@ -20,3 +24,31 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+-stage: Publish
+displayName: 'Publish Test Execution Results'
+steps:
+- task: PublishTestResults@1
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFiles: 'C:\Tricentis\Automation\OpenSourceFrameworks\Cucumber\target\cucumber-report.json.xml'
+
+- stage: Upload
+displayName: Submit Cucumber JSON Results to qTest Pulse
+
+steps:
+- powershell: |
+   $url = 'https://pulse-7.qtestnet.com/webhook/0fd02d1e-47fc-4c3d-83f4-740ed24f2005'
+   
+   $content = Get-Content "C:\Tricentis\Automation\OpenSourceFrameworks\Cucumber\target\cucumber-report.json.xml" -Raw
+   $bytes = [System.Text.Encoding]::ASCII.GetBytes($content)
+   $payload = [System.Convert]::ToBase64String($bytes)
+   
+   $body = @{
+    'projectId' = '87143'
+    'testcycle' = '2598404'
+    'result' = $payload
+   }
+   
+   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+   Invoke-RestMethod -Body $body -Method 'Post' -Uri $url
