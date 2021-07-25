@@ -13,7 +13,6 @@ stages:
 - stage: build
   displayName: Build
 
-steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
