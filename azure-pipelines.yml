@@ -19,7 +19,7 @@ stages:
         mavenPomFile: 'pom.xml'
         mavenOptions: '-Xmx3072m'
         javaHomeOption: 'path'
-        #jdkDirectory: 'C:\Tricentis\Automation\Java\jdk-11.0.11'
+        jdkUserInputPath: C:\Tricentis\Automation\Java\jdk-11.0.11
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'test'
