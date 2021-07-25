@@ -9,10 +9,7 @@ trigger:
 pool:
   name: Default
 
-stages:
-- stage: build
-  displayName: Build
-
+-Steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -23,22 +20,3 @@ stages:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $url = 'https://pulse-7.qtestnet.com/webhook/0fd02d1e-47fc-4c3d-83f4-740ed24f2005'
-      
-      $content = Get-Content "C:\Tricentis\Automation\OpenSourceFrameworks\Cucumber\target\cucumber-report.json.xml" -Raw
-      $bytes = [System.Text.Encoding]::ASCII.GetBytes($content)
-      $payload = [System.Convert]::ToBase64String($bytes)
-      
-      $body = @{
-       'projectId' = '87143'
-       'testcycle' = '2598404'
-       'result' = $payload
-      }
-      
-      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-      Invoke-RestMethod -Body $body -Method 'Post' -Uri $url
