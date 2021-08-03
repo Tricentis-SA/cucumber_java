@@ -14,6 +14,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'mvn test'
+  displayName: 'Execute Cucumber Tests'
 
 - powershell: |
    $url = 'https://pulse-7.qtestnet.com/webhook/0fd02d1e-47fc-4c3d-83f4-740ed24f2005'
