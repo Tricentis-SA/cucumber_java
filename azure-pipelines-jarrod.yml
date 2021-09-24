@@ -17,15 +17,15 @@ steps:
   displayName: 'Execute Cucumber Tests'
 
 - powershell: |
-   $url = 'https://pulse-7.qtestnet.com/webhook/9a4aecb1-81fa-4785-8ee3-6fbea06aaeb1'
+   $url = 'https://pulse-7.qtestnet.com/webhook/9828ad77-f7bd-4ee6-ab4d-564305513373'
    
    $content = Get-Content "C:\TestAutomation\AzureDevOps\agent\_work\1\s\target\cucumber-report.json" -Raw
    $bytes = [System.Text.Encoding]::ASCII.GetBytes($content)
    $payload = [System.Convert]::ToBase64String($bytes)
    
    $body = @{
-    'projectId' = '85683'
-    'testcycle' = '2646456'
+    'projectId' = '119121'
+    'testcycle' = '2743493'
     'result' = $payload
    }
    
