@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  name: Azure Pipelines
+  name: Default
 
 steps:
 - task: PowerShell@2
