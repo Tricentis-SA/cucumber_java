@@ -1,0 +1,34 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+
+pool:
+  name: Default
+
+steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'mvn test'
+  displayName: 'Execute Cucumber Tests'
+
+- powershell: |
+   $url = 'https://pulse-7.qtestnet.com/webhook/9a4aecb1-81fa-4785-8ee3-6fbea06aaeb1'
+   
+   $content = Get-Content "C:\TestAutomation\AzureDevOps\agent\_work\1\s\target\cucumber-report.json" -Raw
+   $bytes = [System.Text.Encoding]::ASCII.GetBytes($content)
+   $payload = [System.Convert]::ToBase64String($bytes)
+   
+   $body = @{
+    'projectId' = '85683'
+    'testcycle' = '2646456'
+    'result' = $payload
+   }
+   
+   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+   Invoke-RestMethod -Body $body -Method 'Post' -Uri $url
+  displayName: 'Upload Results to qTest Pulse'
